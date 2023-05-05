@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Carousel } from "react-bootstrap";
 import { TiArrowBack } from "react-icons/ti";
 import { TiUser } from "react-icons/ti";
 import Product from "./Product";
@@ -14,7 +13,7 @@ const ProductDetail = ({ product, onClose }) => {
         <TiArrowBack size={30} className="mr-3" />
         Back
       </div>
-      <div className="p-10 flex flex-row items-center">
+      <div className="flex flex-row items-center p-10">
         <TiUser size={100} />
         <div className="p-4 text-sm sm:text-2xl">
           <div className="">
@@ -26,22 +25,22 @@ const ProductDetail = ({ product, onClose }) => {
         </div>
       </div>
       <div>
-        <h1 className="font-bold text-base">Bio</h1>
+        <h1 className="text-base font-bold">Bio</h1>
         <p>{product.bio}</p>
-        <h1 className="font-bold text-base">Works At</h1>
+        <h1 className="text-base font-bold">Works At</h1>
         <p>{product.works_at}</p>
         <div className="flex flex-row justify-between sm:justify-start">
           <div className="sm:mr-20 md:mr-40">
-            <h1 className="font-bold text-base">Repositories</h1>
+            <h1 className="text-base font-bold">Repositories</h1>
             <p>{product.pinned_repositories.length}</p>
           </div>
-          <div className="font-bold text-base">
+          <div className="text-base font-bold">
             Followers
             <p className="font-normal">{product.followers}</p>
           </div>
         </div>
         <div className="w-full lg:w-1/2">
-          <h1 className="font-bold text-base">Pinned Repositories</h1>
+          <h1 className="text-base font-bold">Pinned Repositories</h1>
           {product.pinned_repositories.map((repo) => (
             <Product product={repo} />
           ))}

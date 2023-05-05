@@ -1,17 +1,13 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import PaginationBar from "./Pagination";
 import ProductDetail from "./ProductDetail";
-import { Button, Form } from "react-bootstrap";
-import { InputGroup } from "react-bootstrap";
-import { Row, Col } from "react-bootstrap";
 import Data from "./Data.json";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import { Container } from "react-bootstrap";
 import { Navbar } from "react-bootstrap";
 import image from "../images/github_circle.png";
+import Product from "./Product";
 
-const Product = lazy(()=>import('./Product'))
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,27 +17,42 @@ const Home = () => {
 
   useEffect(() => {
     fetchProducts();
+    console.log(filteredProducts);
   }, []);
 
   const fetchProducts = async () => {
     const productsArray = Object.values(Data);
-    console.log(productsArray);
+    console.log(productsArray[0]);
     setProducts(productsArray[0]);
   };
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
+    console.log(searchQuery);
     setCurrentPage(1);
   };
 
-  const filteredProducts = products.filter((product) => {
-    const productName = product.title || ""; // Set productName to empty string if product name is undefined
+  let filteredProducts = products.filter((product) => {
+    const productName = product.name || ""; // Set productName to empty string if product name is undefined
     return productName.toLowerCase().includes(searchQuery.toLowerCase());
   });
+  console.log(filteredProducts);
+  let currentProducts = filteredProducts;
+
+  useEffect(() => {
+    filteredProducts = products.filter((product) => {
+      const productName = product.name || ""; // Set productName to empty string if product name is undefined
+      return productName.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+    currentProducts = filteredProducts;
+
+    console.log(currentProducts);
+  }, [searchQuery]);
+
+  console.log(fetchProducts);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -62,7 +73,7 @@ const Home = () => {
               <Navbar>
                 <Container style={{ margin: 0 }}>
                   <Navbar.Brand
-                    className="flex flex-row items-center text-black text-xl "
+                    className="flex flex-row items-center text-xl text-black "
                     style={{ color: "var(--font-color)", fontWeight: "bolder" }}
                   >
                     <img src={image} className="w-16 mr-4" alt="logo" />
@@ -75,13 +86,13 @@ const Home = () => {
               <div style={{ marginBottom: "2rem" }}>
                 <div
                   style={{ backgroundColor: "#3094f4" }}
-                  className="shadow-lg flex flex-row w-full sm:w-1/2 p-2 items-center"
+                  className="flex flex-row items-center w-full p-2 shadow-lg sm:w-1/2"
                 >
                   <AiOutlineSearch size={40} color="white" />
                   <input
                     style={{ backgroundColor: "#3094f4" }}
                     type="text"
-                    className=" p-2 w-full text-2xl justify-start text-white placeholder-white"
+                    className="justify-start w-full p-2 text-2xl text-white placeholder-white "
                     onChange={handleSearch}
                     placeholder="Search User"
                   />
@@ -95,20 +106,15 @@ const Home = () => {
                   alignItems: "center",
                 }}
               >
-                <Row>
+                <div className="flex flex-row flex-wrap w-full justify-evenly">
                   {currentProducts.map((product) => (
-                    <Col xs={12} lg={4} md={6}>
-                      <Suspense fallback={<div>please wait...</div>}>
-                      <Product
-                        key={product.id}
-                        product={product}
-                        onProductClick={handleProductClick}
-                      />
-
-                      </Suspense>
-                    </Col>
+                    <Product
+                      key={product.id}
+                      product={product}
+                      onProductClick={handleProductClick}
+                    />
                   ))}
-                </Row>
+                </div>
               </div>
             </div>
           </>

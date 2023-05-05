@@ -7,7 +7,7 @@ const Product = ({ product, onProductClick }) => {
   };
 
     return (
-      <div className="text-black m-2 shadow-md p-2 flex flex-row" onClick={handleClick}>
+      <div className="flex flex-row w-full p-2 m-2 text-black shadow-md sm:w-2/5 lg:w-3/12" onClick={handleClick}>
         <div className="w-1/3">
         <FaUserCircle size={50} color="#3094f4" className="w-full" />
         </div>
@@ -25,13 +25,3 @@ const Product = ({ product, onProductClick }) => {
 };
 
 export default Product;
-
-{/* <Card style={{color:'black', margin:'2rem 2rem'}}>
-      <Card.Body>
-        <Card.Title>{product.name}</Card.Title>
-        <Card.Text>
-          {product.bio}
-        </Card.Text>
-        <Button variant="secondary" onClick={handleClick}>View Details</Button>
-      </Card.Body>
-    </Card> */}
