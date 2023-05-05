@@ -1,0 +1,12 @@
+.App {
+  background-color: var(--primary-bg);
+}
+*:focus {
+  outline: none;
+}
+/* li a{
+  background-color: var(--secondary-bg);
+} */
+
+
+
